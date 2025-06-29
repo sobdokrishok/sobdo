@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শব্দকৃষকের কিছু কথা | বাংলা সাহিত্যের সরস উপাদান</title>
+    <meta name="description" content="বাংলা কবিতা, গল্প ও প্রবন্ধের একটি সহজ-সরল সংগ্রহ">
+    <link href="https://fonts.googleapis.com/css2?family=SolaimanLipi&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif Bengali', 'SolaimanLipi', serif;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 80px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 10px 5%;
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-right: 20px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-right: 15px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #d32f2f;
+        }
+        
+        .login-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'SolaimanLipi', serif;
+            margin-left: 10px;
+        }
+        
+        .logout-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'SolaimanLipi', serif;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .datetime {
+            width: 100%;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 20px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .post {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #222;
+        }
+        
+        .post-author {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .post-date {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-line;
+            margin-bottom: 15px;
+        }
+        
+        .post-content-preview {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-line;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .read-more {
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+        
+        .author-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 10px 0;
+        }
+        
+        .post-actions {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            margin-right: 15px;
+            font-family: 'SolaimanLipi', serif;
+            font-size: 0.85rem;
+        }
+        
+        .action-btn:hover {
+            color: #d32f2f;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            font-family: 'SolaimanLipi', serif;
+            font-size: 0.95rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'SolaimanLipi', serif;
+            margin-right: 10px;
+        }
+        
+        .btn-secondary {
+            background: #666;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        /* Alert */
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 30px;
+            background: white;
+            color: #333;
+            border-radius: 5px;
+            display: none;
+            z-index: 3000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 80%;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .alert-error {
+            border-left-color: #f44336;
+        }
+        
+        .alert-warning {
+            border-left-color: #ff9800;
+        }
+        
+        .alert-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Admin Dashboard */
+        .admin-panel {
+            display: none;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+        
+        .admin-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        
+        .admin-tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: 'SolaimanLipi', serif;
+            white-space: nowrap;
+        }
+        
+        .admin-tab.active {
+            border-bottom: 2px solid #d32f2f;
+            color: #d32f2f;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 5%;
+            }
+            
+            .header-left {
+                width: 100%;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            
+            .nav-menu {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+                margin-top: 10px;
+            }
+            
+            .nav-menu li {
+                margin-right: 15px;
+                white-space: nowrap;
+            }
+            
+            .datetime {
+                text-align: left;
+                margin-top: 10px;
+            }
+            
+            .post-title {
+                font-size: 1.3rem;
+            }
+            
+            .post-content {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Photocard */
+        .photocard {
+            background: white;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .photocard-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        .photocard-content {
+            font-size: 1.2rem;
+            line-height: 2;
+            white-space: pre-line;
+            margin-bottom: 30px;
+        }
+        
+        .photocard-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .photocard-footer {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 30px;
+        }
+        
+        /* Book Cover */
+        .book-cover {
+            max-width: 150px;
+            height: auto;
+            margin: 10px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Section Title */
+        .section-title {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'SolaimanLipi', serif;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="header-left">
+            <div class="site-title">শব্দকৃষকের কিছু কথা</div>
+            <button class="login-btn" id="loginBtn">লগইন</button>
+            <button class="logout-btn" id="logoutBtn">লগআউট</button>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-link active" data-section="home">হোম</a></li>
+            <li><a href="#" class="nav-link" data-section="poetry">কবিতা</a></li>
+            <li><a href="#" class="nav-link" data-section="story">গল্প</a></li>
+            <li><a href="#" class="nav-link" data-section="essay">প্রবন্ধ</a></li>
+            <li><a href="#" class="nav-link" data-section="authors">লেখক পরিচিতি</a></li>
+            <li><a href="#" class="nav-link" data-section="books">বইসমূহ</a></li>
+        </ul>
+        <div class="datetime" id="datetime"></div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container" id="contentContainer">
+        <!-- Posts will be dynamically inserted here -->
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeLoginModal">&times;</button>
+            <h3 class="modal-title">লগইন</h3>
+            <div class="form-group">
+                <label for="username">ব্যবহারকারীর নাম</label>
+                <input type="text" id="username" class="form-control" placeholder="ব্যবহারকারীর নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="password">পাসওয়ার্ড</label>
+                <input type="password" id="password" class="form-control" placeholder="পাসওয়ার্ড লিখুন">
+            </div>
+            <button class="btn" id="submitLogin">লগইন</button>
+            <button class="btn btn-secondary" id="cancelLogin">বাতিল</button>
+        </div>
+    </div>
+    
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+            <h3 class="modal-title" id="adminModalTitle">নতুন লেখা যোগ করুন</h3>
+            <div class="form-group">
+                <label for="postTitle">শিরোনাম</label>
+                <input type="text" id="postTitle" class="form-control" placeholder="লেখার শিরোনাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="postAuthor">লেখক</label>
+                <input type="text" id="postAuthor" class="form-control" placeholder="লেখকের নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="postCategory">বিভাগ</label>
+                <select id="postCategory" class="form-control">
+                    <option value="poetry">কবিতা</option>
+                    <option value="story">গল্প</option>
+                    <option value="essay">প্রবন্ধ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="postDate">রচনাকাল</label>
+                <input type="text" id="postDate" class="form-control" placeholder="রচনার তারিখ লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="postContent">লেখা</label>
+                <textarea id="postContent" class="form-control" placeholder="আপনার লেখাটি এখানে লিখুন"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="postImage">ছবি আপলোড (ঐচ্ছিক)</label>
+                <input type="file" id="postImage" class="form-control" accept="image/*">
+            </div>
+            <button class="btn" id="savePost">সংরক্ষণ করুন</button>
+            <button class="btn btn-secondary" id="cancelPost">বাতিল</button>
+            <input type="hidden" id="editPostId">
+        </div>
+    </div>
+    
+    <!-- Author Modal -->
+    <div class="modal" id="authorModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeAuthorModal">&times;</button>
+            <h3 class="modal-title">লেখক পরিচিতি যোগ করুন</h3>
+            <div class="form-group">
+                <label for="authorName">লেখকের নাম</label>
+                <input type="text" id="authorName" class="form-control" placeholder="লেখকের নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="authorBio">লেখকের সংক্ষিপ্ত পরিচিতি</label>
+                <textarea id="authorBio" class="form-control" placeholder="লেখকের সংক্ষিপ্ত পরিচিতি লিখুন"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="authorImage">লেখকের ছবি আপলোড (ঐচ্ছিক)</label>
+                <input type="file" id="authorImage" class="form-control" accept="image/*">
+            </div>
+            <button class="btn" id="saveAuthor">সংরক্ষণ করুন</button>
+            <button class="btn btn-secondary" id="cancelAuthor">বাতিল</button>
+            <input type="hidden" id="editAuthorId">
+        </div>
+    </div>
+    
+    <!-- Book Modal -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeBookModal">&times;</button>
+            <h3 class="modal-title">নতুন বই যোগ করুন</h3>
+            <div class="form-group">
+                <label for="bookTitle">বইয়ের নাম</label>
+                <input type="text" id="bookTitle" class="form-control" placeholder="বইয়ের নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="bookAuthor">লেখক</label>
+                <input type="text" id="bookAuthor" class="form-control" placeholder="লেখকের নাম লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="bookType">ধরণ</label>
+                <input type="text" id="bookType" class="form-control" placeholder="বইয়ের ধরণ লিখুন (কবিতা/গল্প/উপন্যাস)">
+            </div>
+            <div class="form-group">
+                <label for="bookYear">প্রকাশকাল</label>
+                <input type="text" id="bookYear" class="form-control" placeholder="প্রকাশের সাল লিখুন">
+            </div>
+            <div class="form-group">
+                <label for="bookCover">প্রচ্ছদ ছবি আপলোড</label>
+                <input type="file" id="bookCover" class="form-control" accept="image/*">
+                <div id="bookCoverPreview"></div>
+            </div>
+            <button class="btn" id="saveBook">সংরক্ষণ করুন</button>
+            <button class="btn btn-secondary" id="cancelBook">বাতিল</button>
+            <input type="hidden" id="editBookId">
+        </div>
+    </div>
+    
+    <!-- Alert -->
+    <div class="alert" id="alert">
+        <div class="alert-icon" id="alertIcon">✓</div>
+        <div id="alertMessage"></div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="container">
+        <div class="admin-panel" id="adminPanel">
+            <h3 class="admin-title">প্রশাসনিক প্যানেল</h3>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="posts">লেখা ব্যবস্থাপনা</button>
+                <button class="admin-tab" data-tab="authors-admin">লেখক পরিচিতি</button>
+                <button class="admin-tab" data-tab="books-admin">বই ব্যবস্থাপনা</button>
+                <button class="admin-tab" data-tab="add-post">নতুন লেখা</button>
+                <button class="admin-tab" data-tab="add-author">নতুন লেখক</button>
+                <button class="admin-tab" data-tab="add-book">নতুন বই</button>
+            </div>
+            
+            <div class="tab-content active" id="posts-tab">
+                <div id="postsList">
+                    <!-- Posts will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="authors-admin-tab">
+                <div id="authorsList">
+                    <!-- Authors will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="books-admin-tab">
+                <div id="booksList">
+                    <!-- Books will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="add-post-tab">
+                <button class="btn" id="addNewPost">নতুন লেখা যোগ করুন</button>
+            </div>
+            
+            <div class="tab-content" id="add-author-tab">
+                <button class="btn" id="addNewAuthor">নতুন লেখক যোগ করুন</button>
+            </div>
+            
+            <div class="tab-content" id="add-book-tab">
+                <button class="btn" id="addNewBook">নতুন বই যোগ করুন</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Bengali Month Names
+        const bengaliMonths = [
+            'জানুয়ারী', 'ফেব্রুয়ারী', 'মার্চ', 'এপ্রিল', 
+            'মে', 'জুন', 'জুলাই', 'আগস্ট', 
+            'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'
+        ];
+        
+        // Bengali Day Names
+        const bengaliDays = [
+            'রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 
+            'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'
+        ];
+        
+        // Initialize data in localStorage if not exists
+        if (!localStorage.getItem('posts')) {
+            const samplePosts = [
+                {
+                    id: 1,
+                    title: 'বৃষ্টি',
+                    author: 'জীবনানন্দ দাশ',
+                    category: 'poetry',
+                    date: '১৯৩৪',
+                    content: 'বৃষ্টি পড়ে টাপুর টুপুর,\nনদী এলো বানে।\nহিজল তমালের বনে\nজল ভরেছে গানে গানে।\n\nকোন্ পথে এবার যাবো\nআমার মনে নেই ভাবনা—\nবৃষ্টি পড়ে টাপুর টুপুর,\nনদী এলো বানে।',
+                    published: true,
+                    image: '',
+                    createdAt: new Date('1934-01-01').getTime()
+                },
+                {
+                    id: 2,
+                    title: 'লাল সালু',
+                    author: 'সৈয়দ ওয়ালীউল্লাহ',
+                    category: 'story',
+                    date: '১৯৪৮',
+                    content: 'গ্রামের পাশ দিয়ে বয়ে গেছে ছোট্ট একটি নদী। নদীর পাড়ে এক টুকরো জমিতে বাস করে মজিদ। সে প্রতিদিন সকালে উঠে নদীতে গিয়ে স্নান করে, তারপর জমিতে কাজে লেগে যায়। একদিন সকালে সে দেখে নদীর জলে ভেসে আসছে একটি লাল সালু...',
+                    published: true,
+                    image: '',
+                    createdAt: new Date('1948-01-01').getTime()
+                }
+            ];
+            localStorage.setItem('posts', JSON.stringify(samplePosts));
+        }
+        
+        if (!localStorage.getItem('authors')) {
+            const sampleAuthors = [
+                {
+                    id: 1,
+                    name: 'জীবনানন্দ দাশ',
+                    bio: 'জীবনানন্দ দাশ (১৮৯৯-১৯৫৪) বাংলা সাহিত্যের অন্যতম প্রধান আধুনিক কবি। তাঁর কবিতায় প্রকৃতি ও নাগরিক জীবনের সমন্বয় দেখা যায়।',
+                    image: ''
+                },
+                {
+                    id: 2,
+                    name: 'সৈয়দ ওয়ালীউল্লাহ',
+                    bio: 'সৈয়দ ওয়ালীউল্লাহ (১৯২২-১৯৭১) বাংলা সাহিত্যের একজন বিশিষ্ট কথাসাহিত্যিক। তাঁর রচনায় গ্রামীণ জীবনের বাস্তব চিত্র ফুটে উঠেছে।',
+                    image: ''
+                }
+            ];
+            localStorage.setItem('authors', JSON.stringify(sampleAuthors));
+        }
+        
+        if (!localStorage.getItem('books')) {
+            const sampleBooks = [
+                {
+                    id: 1,
+                    title: 'কবিতা সংগ্রহ',
+                    author: 'জীবনানন্দ দাশ',
+                    type: 'কবিতা',
+                    year: '১৯৫৪',
+                    cover: ''
+                },
+                {
+                    id: 2,
+                    title: 'লাল সালু',
+                    author: 'সৈয়দ ওয়ালীউল্লাহ',
+                    type: 'উপন্যাস',
+                    year: '১৯৪৮',
+                    cover: ''
+                }
+            ];
+            localStorage.setItem('books', JSON.stringify(sampleBooks));
+        }
+        
+        // DOM Elements
+        const datetimeElement = document.getElementById('datetime');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const cancelLogin = document.getElementById('cancelLogin');
+        const submitLogin = document.getElementById('submitLogin');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const alertElement = document.getElementById('alert');
+        const alertMessage = document.getElementById('alertMessage');
+        const alertIcon = document.getElementById('alertIcon');
+        const adminPanel = document.getElementById('adminPanel');
+        const contentContainer = document.getElementById('contentContainer');
+        const adminModal = document.getElementById('adminModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const savePostBtn = document.getElementById('savePost');
+        const cancelPostBtn = document.getElementById('cancelPost');
+        const addNewPostBtn = document.getElementById('addNewPost');
+        const postsList = document.getElementById('postsList');
+        const authorModal = document.getElementById('authorModal');
+        const closeAuthorModal = document.getElementById('closeAuthorModal');
+        const saveAuthorBtn = document.getElementById('saveAuthor');
+        const cancelAuthorBtn = document.getElementById('cancelAuthor');
+        const addNewAuthorBtn = document.getElementById('addNewAuthor');
+        const authorsList = document.getElementById('authorsList');
+        const bookModal = document.getElementById('bookModal');
+        const closeBookModal = document.getElementById('closeBookModal');
+        const saveBookBtn = document.getElementById('saveBook');
+        const cancelBookBtn = document.getElementById('cancelBook');
+        const addNewBookBtn = document.getElementById('addNewBook');
+        const booksList = document.getElementById('booksList');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const bookCoverInput = document.getElementById('bookCover');
+        const bookCoverPreview = document.getElementById('bookCoverPreview');
+        
+        // Variables to track scroll position
+        let lastScrollPosition = 0;
+        let currentSection = 'home';
+        
+        // Check if user is logged in
+        if (localStorage.getItem('loggedIn')) {
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'block';
+            adminPanel.style.display = 'block';
+        }
+        
+        // Update datetime
+        function updateDateTime() {
+            const now = new Date();
+            const day = now.getDate();
+            const month = bengaliMonths[now.getMonth()];
+            const year = now.getFullYear();
+            const dayName = bengaliDays[now.getDay()];
+            
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            let ampm = 'am';
+            
+            if (hours >= 12) {
+                ampm = 'pm';
+                if (hours > 12) hours -= 12;
+            }
+            if (hours === 0) hours = 12;
+            
+            const bengaliNumbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            function toBengaliNumber(num) {
+                return num.toString().split('').map(d => bengaliNumbers[d] || d).join('');
+            }
+            
+            const dateStr = `${toBengaliNumber(day)} ${month} ${toBengaliNumber(year)}, ${dayName}, ${toBengaliNumber(hours)}:${toBengaliNumber(minutes)}:${toBengaliNumber(seconds)} ${ampm}`;
+            datetimeElement.textContent = dateStr;
+        }
+        
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+        
+        // Show alert
+        function showAlert(message, type = 'success') {
+            alertMessage.textContent = message;
+            alertElement.className = 'alert';
+            
+            if (type === 'error') {
+                alertElement.classList.add('alert-error');
+                alertIcon.textContent = '✗';
+            } else if (type === 'warning') {
+                alertElement.classList.add('alert-warning');
+                alertIcon.textContent = '⚠';
+            } else {
+                alertIcon.textContent = '✓';
+            }
+            
+            alertElement.style.display = 'block';
+            
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Login functions
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        cancelLogin.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        submitLogin.addEventListener('click', () => {
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            
+            if (username === 'admin' && password === '697982') {
+                localStorage.setItem('loggedIn', 'true');
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                adminPanel.style.display = 'block';
+                loginModal.style.display = 'none';
+                showAlert('সফলভাবে লগইন করা হয়েছে', 'success');
+                loadPosts();
+                loadAuthors();
+                loadBooks();
+                renderPosts('home');
+            } else {
+                showAlert('লগইন ব্যর্থ হয়েছে', 'error');
+            }
+        });
+        
+        // Logout function
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('loggedIn');
+            loginBtn.style.display = 'block';
+            logoutBtn.style.display = 'none';
+            adminPanel.style.display = 'none';
+            showAlert('সফলভাবে লগআউট করা হয়েছে', 'success');
+            renderPosts('home');
+        });
+        
+        // Admin post functions
+        addNewPostBtn.addEventListener('click', () => {
+            document.getElementById('adminModalTitle').textContent = 'নতুন লেখা যোগ করুন';
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postAuthor').value = '';
+            document.getElementById('postCategory').value = 'poetry';
+            document.getElementById('postDate').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImage').value = '';
+            document.getElementById('editPostId').value = '';
+            adminModal.style.display = 'flex';
+        });
+        
+        closeAdminModal.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+        });
+        
+        cancelPostBtn.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+        });
+        
+        savePostBtn.addEventListener('click', () => {
+            const title = document.getElementById('postTitle').value;
+            const author = document.getElementById('postAuthor').value;
+            const category = document.getElementById('postCategory').value;
+            const date = document.getElementById('postDate').value;
+            const content = document.getElementById('postContent').value;
+            const editId = document.getElementById('editPostId').value;
+            
+            if (!title || !author || !content) {
+                showAlert('দয়া করে সকল প্রয়োজনীয় তথ্য প্রদান করুন', 'error');
+                return;
+            }
+            
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            const imageInput = document.getElementById('postImage');
+            let image = '';
+            
+            if (imageInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image = e.target.result;
+                    savePostData();
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                savePostData();
+            }
+            
+            function savePostData() {
+                if (editId) {
+                    // Edit existing post
+                    const index = posts.findIndex(post => post.id == editId);
+                    if (index !== -1) {
+                        posts[index] = {
+                            ...posts[index],
+                            title,
+                            author,
+                            category,
+                            date,
+                            content,
+                            image: image || posts[index].image
+                        };
+                    }
+                } else {
+                    // Add new post
+                    const newId = posts.length > 0 ? Math.max(...posts.map(post => post.id)) + 1 : 1;
+                    posts.push({
+                        id: newId,
+                        title,
+                        author,
+                        category,
+                        date,
+                        content,
+                        image,
+                        published: true,
+                        createdAt: new Date().getTime()
+                    });
+                }
+                
+                localStorage.setItem('posts', JSON.stringify(posts));
+                adminModal.style.display = 'none';
+                showAlert(editId ? 'লেখা সফলভাবে আপডেট করা হয়েছে' : 'সফলভাবে প্রকাশিত হয়েছে', 'success');
+                loadPosts();
+                renderPosts(currentSection);
+            }
+        });
+        
+        // Admin author functions
+        addNewAuthorBtn.addEventListener('click', () => {
+            document.getElementById('authorName').value = '';
+            document.getElementById('authorBio').value = '';
+            document.getElementById('authorImage').value = '';
+            document.getElementById('editAuthorId').value = '';
+            authorModal.style.display = 'flex';
+        });
+        
+        closeAuthorModal.addEventListener('click', () => {
+            authorModal.style.display = 'none';
+        });
+        
+        cancelAuthorBtn.addEventListener('click', () => {
+            authorModal.style.display = 'none';
+        });
+        
+        saveAuthorBtn.addEventListener('click', () => {
+            const name = document.getElementById('authorName').value;
+            const bio = document.getElementById('authorBio').value;
+            const editId = document.getElementById('editAuthorId').value;
+            
+            if (!name || !bio) {
+                showAlert('দয়া করে সকল প্রয়োজনীয় তথ্য প্রদান করুন', 'error');
+                return;
+            }
+            
+            const authors = JSON.parse(localStorage.getItem('authors'));
+            const imageInput = document.getElementById('authorImage');
+            let image = '';
+            
+            if (imageInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image = e.target.result;
+                    saveAuthorData();
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                saveAuthorData();
+            }
+            
+            function saveAuthorData() {
+                if (editId) {
+                    // Edit existing author
+                    const index = authors.findIndex(author => author.id == editId);
+                    if (index !== -1) {
+                        authors[index] = {
+                            ...authors[index],
+                            name,
+                            bio,
+                            image: image || authors[index].image
+                        };
+                    }
+                } else {
+                    // Add new author
+                    const newId = authors.length > 0 ? Math.max(...authors.map(author => author.id)) + 1 : 1;
+                    authors.push({
+                        id: newId,
+                        name,
+                        bio,
+                        image
+                    });
+                }
+                
+                localStorage.setItem('authors', JSON.stringify(authors));
+                authorModal.style.display = 'none';
+                showAlert(editId ? 'লেখক সফলভাবে আপডেট করা হয়েছে' : 'নতুন লেখক সফলভাবে যোগ করা হয়েছে', 'success');
+                loadAuthors();
+                renderPosts('authors');
+            }
+        });
+        
+        // Book cover preview
+        bookCoverInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    bookCoverPreview.innerHTML = `<img src="${e.target.result}" class="book-cover">`;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        
+        // Admin book functions
+        addNewBookBtn.addEventListener('click', () => {
+            document.getElementById('bookTitle').value = '';
+            document.getElementById('bookAuthor').value = '';
+            document.getElementById('bookType').value = '';
+            document.getElementById('bookYear').value = '';
+            document.getElementById('bookCover').value = '';
+            bookCoverPreview.innerHTML = '';
+            document.getElementById('editBookId').value = '';
+            bookModal.style.display = 'flex';
+        });
+        
+        closeBookModal.addEventListener('click', () => {
+            bookModal.style.display = 'none';
+        });
+        
+        cancelBookBtn.addEventListener('click', () => {
+            bookModal.style.display = 'none';
+        });
+        
+        saveBookBtn.addEventListener('click', () => {
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const type = document.getElementById('bookType').value;
+            const year = document.getElementById('bookYear').value;
+            const editId = document.getElementById('editBookId').value;
+            
+            if (!title || !author || !type || !year) {
+                showAlert('দয়া করে সকল প্রয়োজনীয় তথ্য প্রদান করুন', 'error');
+                return;
+            }
+            
+            const books = JSON.parse(localStorage.getItem('books'));
+            const coverInput = document.getElementById('bookCover');
+            let cover = '';
+            
+            if (coverInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    cover = e.target.result;
+                    saveBookData();
+                };
+                reader.readAsDataURL(coverInput.files[0]);
+            } else {
+                saveBookData();
+            }
+            
+            function saveBookData() {
+                if (editId) {
+                    // Edit existing book
+                    const index = books.findIndex(book => book.id == editId);
+                    if (index !== -1) {
+                        books[index] = {
+                            ...books[index],
+                            title,
+                            author,
+                            type,
+                            year,
+                            cover: cover || books[index].cover
+                        };
+                    }
+                } else {
+                    // Add new book
+                    const newId = books.length > 0 ? Math.max(...books.map(book => book.id)) + 1 : 1;
+                    books.push({
+                        id: newId,
+                        title,
+                        author,
+                        type,
+                        year,
+                        cover
+                    });
+                }
+                
+                localStorage.setItem('books', JSON.stringify(books));
+                bookModal.style.display = 'none';
+                showAlert(editId ? 'বই সফলভাবে আপডেট করা হয়েছে' : 'নতুন বই সফলভাবে যোগ করা হয়েছে', 'success');
+                loadBooks();
+                renderPosts('books');
+            }
+        });
+        
+        // Load posts for admin
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            // Sort posts by createdAt in descending order (newest first)
+            posts.sort((a, b) => b.createdAt - a.createdAt);
+            postsList.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <h4>${post.title}</h4>
+                    <p><small>${post.author} | ${post.category === 'poetry' ? 'কবিতা' : post.category === 'story' ? 'গল্প' : 'প্রবন্ধ'} | ${post.date}</small></p>
+                    <p>${post.content.substring(0, 50)}...</p>
+                    <div>
+                        <button class="action-btn edit-post" data-id="${post.id}">সম্পাদনা</button>
+                        <button class="action-btn ${post.published ? 'unpublish-post' : 'publish-post'}" data-id="${post.id}">
+                            ${post.published ? 'অপ্রকাশিত করুন' : 'প্রকাশ করুন'}
+                        </button>
+                        <button class="action-btn delete-post" data-id="${post.id}">মুছে ফেলুন</button>
+                    </div>
+                `;
+                postsList.appendChild(postElement);
+            });
+            
+            // Add event listeners for post actions
+            document.querySelectorAll('.edit-post').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    editPost(postId);
+                });
+            });
+            
+            document.querySelectorAll('.publish-post, .unpublish-post').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    togglePublishPost(postId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-post').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    deletePost(postId);
+                });
+            });
+        }
+        
+        // Load authors for admin
+        function loadAuthors() {
+            const authors = JSON.parse(localStorage.getItem('authors'));
+            authorsList.innerHTML = '';
+            
+            authors.forEach(author => {
+                const authorElement = document.createElement('div');
+                authorElement.className = 'post';
+                authorElement.innerHTML = `
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        ${author.image ? `<img src="${author.image}" class="author-image" style="margin-right: 15px;">` : ''}
+                        <div>
+                            <h4>${author.name}</h4>
+                            <p>${author.bio.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="action-btn edit-author" data-id="${author.id}">সম্পাদনা</button>
+                        <button class="action-btn delete-author" data-id="${author.id}">মুছে ফেলুন</button>
+                    </div>
+                `;
+                authorsList.appendChild(authorElement);
+            });
+            
+            // Add event listeners for author actions
+            document.querySelectorAll('.edit-author').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const authorId = this.getAttribute('data-id');
+                    editAuthor(authorId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-author').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const authorId = this.getAttribute('data-id');
+                    deleteAuthor(authorId);
+                });
+            });
+        }
+        
+        // Load books for admin
+        function loadBooks() {
+            const books = JSON.parse(localStorage.getItem('books'));
+            booksList.innerHTML = '';
+            
+            books.forEach(book => {
+                const bookElement = document.createElement('div');
+                bookElement.className = 'post';
+                bookElement.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        ${book.cover ? `<img src="${book.cover}" class="book-cover" style="margin-right: 15px;">` : ''}
+                        <div>
+                            <h4>${book.title}</h4>
+                            <p><small>${book.author} | ${book.type} | ${book.year}</small></p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button class="action-btn edit-book" data-id="${book.id}">সম্পাদনা</button>
+                        <button class="action-btn delete-book" data-id="${book.id}">মুছে ফেলুন</button>
+                    </div>
+                `;
+                booksList.appendChild(bookElement);
+            });
+            
+            // Add event listeners for book actions
+            document.querySelectorAll('.edit-book').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-id');
+                    editBook(bookId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-book').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-id');
+                    deleteBook(bookId);
+                });
+            });
+        }
+        
+        // Edit post
+        function editPost(id) {
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            const post = posts.find(p => p.id == id);
+            
+            if (post) {
+                document.getElementById('adminModalTitle').textContent = 'লেখা সম্পাদনা করুন';
+                document.getElementById('postTitle').value = post.title;
+                document.getElementById('postAuthor').value = post.author;
+                document.getElementById('postCategory').value = post.category;
+                document.getElementById('postDate').value = post.date;
+                document.getElementById('postContent').value = post.content;
+                document.getElementById('editPostId').value = post.id;
+                adminModal.style.display = 'flex';
+            }
+        }
+        
+        // Edit author
+        function editAuthor(id) {
+            const authors = JSON.parse(localStorage.getItem('authors'));
+            const author = authors.find(a => a.id == id);
+            
+            if (author) {
+                document.getElementById('authorName').value = author.name;
+                document.getElementById('authorBio').value = author.bio;
+                document.getElementById('editAuthorId').value = author.id;
+                authorModal.style.display = 'flex';
+            }
+        }
+        
+        // Edit book
+        function editBook(id) {
+            const books = JSON.parse(localStorage.getItem('books'));
+            const book = books.find(b => b.id == id);
+            
+            if (book) {
+                document.getElementById('bookTitle').value = book.title;
+                document.getElementById('bookAuthor').value = book.author;
+                document.getElementById('bookType').value = book.type;
+                document.getElementById('bookYear').value = book.year;
+                document.getElementById('editBookId').value = book.id;
+                bookCoverPreview.innerHTML = book.cover ? `<img src="${book.cover}" class="book-cover">` : '';
+                bookModal.style.display = 'flex';
+            }
+        }
+        
+        // Toggle publish status
+        function togglePublishPost(id) {
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            const index = posts.findIndex(p => p.id == id);
+            
+            if (index !== -1) {
+                posts[index].published = !posts[index].published;
+                localStorage.setItem('posts', JSON.stringify(posts));
+                showAlert(posts[index].published ? 'লেখা সফলভাবে প্রকাশিত হয়েছে' : 'লেখা অপ্রকাশিত করা হয়েছে', 'success');
+                loadPosts();
+                renderPosts(currentSection);
+            }
+        }
+        
+        // Delete post
+        function deletePost(id) {
+            if (confirm('আপনি কি নিশ্চিতভাবে এই লেখাটি মুছে ফেলতে চান?')) {
+                const posts = JSON.parse(localStorage.getItem('posts'));
+                const filteredPosts = posts.filter(p => p.id != id);
+                localStorage.setItem('posts', JSON.stringify(filteredPosts));
+                showAlert('লেখাটি বাতিল করা হয়েছে', 'success');
+                loadPosts();
+                renderPosts(currentSection);
+            }
+        }
+        
+        // Delete author
+        function deleteAuthor(id) {
+            if (confirm('আপনি কি নিশ্চিতভাবে এই লেখককে মুছে ফেলতে চান?')) {
+                const authors = JSON.parse(localStorage.getItem('authors'));
+                const filteredAuthors = authors.filter(a => a.id != id);
+                localStorage.setItem('authors', JSON.stringify(filteredAuthors));
+                showAlert('লেখক বাতিল করা হয়েছে', 'success');
+                loadAuthors();
+                renderPosts('authors');
+            }
+        }
+        
+        // Delete book
+        function deleteBook(id) {
+            if (confirm('আপনি কি নিশ্চিতভাবে এই বইটি মুছে ফেলতে চান?')) {
+                const books = JSON.parse(localStorage.getItem('books'));
+                const filteredBooks = books.filter(b => b.id != id);
+                localStorage.setItem('books', JSON.stringify(filteredBooks));
+                showAlert('বইটি বাতিল করা হয়েছে', 'success');
+                loadBooks();
+            }
+        }
+        
+        // Tab switching
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                adminTabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Render posts for public view
+        function renderPosts(section = 'all') {
+            const posts = JSON.parse(localStorage.getItem('posts'));
+            const authors = JSON.parse(localStorage.getItem('authors'));
+            // Sort posts by createdAt in descending order (newest first)
+            const publishedPosts = posts.filter(post => post.published).sort((a, b) => b.createdAt - a.createdAt);
+            
+            // Store current section
+            currentSection = section;
+            
+            contentContainer.innerHTML = '';
+            
+            if (section === 'all' || section === 'home') {
+                // Show all published posts on home with newest first
+                contentContainer.innerHTML = `<h2 class="section-title">সাম্প্রতিক লেখা</h2>`;
+                publishedPosts.forEach(post => {
+                    renderPostPreview(post);
+                });
+            } else if (section === 'poetry') {
+                // Show poetry posts with newest first
+                const poetryPosts = publishedPosts.filter(post => post.category === 'poetry');
+                if (poetryPosts.length > 0) {
+                    contentContainer.innerHTML = `<h2 class="section-title">কবিতা</h2>`;
+                    poetryPosts.forEach(post => {
+                        renderPostPreview(post);
+                    });
+                } else {
+                    contentContainer.innerHTML = `<p>কবিতা বিভাগে কোনো লেখা পাওয়া যায়নি</p>`;
+                }
+            } else if (section === 'authors') {
+                // Show authors section
+                let authorsHTML = '<h2 class="section-title">লেখক পরিচিতি</h2>';
+                
+                authors.forEach(author => {
+                    const authorPosts = publishedPosts.filter(post => post.author === author.name);
+                    
+                    authorsHTML += `
+                        <div class="post" style="margin-bottom: 40px;">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+                                ${author.image ? `<img src="${author.image}" class="author-image" style="margin-right: 20px;">` : ''}
+                                <div>
+                                    <h3>${author.name}</h3>
+                                    <p>${author.bio}</p>
+                                </div>
+                            </div>
+                            ${authorPosts.length > 0 ? `
+                                <h4 style="margin-top: 15px;">লেখকের রচনাবলী:</h4>
+                                <div style="margin-left: 20px;">
+                                    ${authorPosts.map(post => `
+                                        <div style="margin-bottom: 15px;">
+                                            <h5 style="color: #d32f2f; cursor: pointer;" class="view-post" data-id="${post.id}">${post.title}</h5>
+                                            <p style="font-style: italic; color: #666;">${post.date}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+                
+                contentContainer.innerHTML = authorsHTML;
+                
+                // Add event listeners for viewing posts from author page
+                document.querySelectorAll('.view-post').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const postId = this.getAttribute('data-id');
+                        const post = posts.find(p => p.id == postId);
+                        if (post) {
+                            // Store scroll position before showing full post
+                            lastScrollPosition = window.scrollY;
+                            contentContainer.innerHTML = '';
+                            renderFullPost(post);
+                        }
+                    });
+                });
+            } else if (section === 'books') {
+                // Show books section
+                const books = JSON.parse(localStorage.getItem('books'));
+                let booksHTML = '<h2 class="section-title">বইসমূহ</h2>';
+                
+                books.forEach(book => {
+                    booksHTML += `
+                        <div class="post" style="margin-bottom: 30px;">
+                            <div style="display: flex; align-items: flex-start;">
+                                ${book.cover ? `<img src="${book.cover}" class="book-cover" style="margin-right: 20px;">` : ''}
+                                <div>
+                                    <h3>${book.title}</h3>
+                                    <p><small>${book.author} | ${book.type} | ${book.year}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                contentContainer.innerHTML = booksHTML;
+            } else {
+                // For other sections (story, essay)
+                const filteredPosts = publishedPosts.filter(post => 
+                    (section === 'story' && post.category === 'story') ||
+                    (section === 'essay' && post.category === 'essay')
+                );
+                
+                if (filteredPosts.length > 0) {
+                    contentContainer.innerHTML = `<h2 class="section-title">${
+                        section === 'story' ? 'গল্প' : 'প্রবন্ধ'
+                    }</h2>`;
+                    filteredPosts.forEach(post => {
+                        renderPostPreview(post);
+                    });
+                } else {
+                    contentContainer.innerHTML = `<p>${
+                        section === 'story' ? 'গল্প' : 'প্রবন্ধ'
+                    } বিভাগে কোনো লেখা পাওয়া যায়নি</p>`;
+                }
+            }
+            
+            // Scroll to stored position after rendering
+            window.scrollTo(0, lastScrollPosition);
+        }
+        
+        // Render post preview (3 lines)
+        function renderPostPreview(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            postElement.id = `post-${post.id}`;
+            
+            postElement.innerHTML = `
+                <h2 class="post-title">${post.title}</h2>
+                <div class="post-author">${post.author}</div>
+                <div class="post-date">রচনাকাল: ${post.date}</div>
+                ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+                <div class="post-content-preview">${post.content}</div>
+                <div class="read-more" data-id="${post.id}">সম্পূর্ণ পড়ুন →</div>
+                ${localStorage.getItem('loggedIn') ? `
+                    <div class="post-actions">
+                        <button class="action-btn edit-post" data-id="${post.id}">সম্পাদনা</button>
+                        <button class="action-btn ${post.published ? 'unpublish-post' : 'publish-post'}" data-id="${post.id}">
+                            ${post.published ? 'অপ্রকাশিত করুন' : 'প্রকাশ করুন'}
+                        </button>
+                        <button class="action-btn delete-post" data-id="${post.id}">মুছে ফেলুন</button>
+                    </div>
+                ` : ''}
+            `;
+            
+            contentContainer.appendChild(postElement);
+            
+            // Add event listener for read more
+            postElement.querySelector('.read-more').addEventListener('click', function() {
+                const postId = this.getAttribute('data-id');
+                const post = JSON.parse(localStorage.getItem('posts')).find(p => p.id == postId);
+                if (post) {
+                    // Store scroll position before showing full post
+                    lastScrollPosition = window.scrollY;
+                    contentContainer.innerHTML = '';
+                    renderFullPost(post);
+                }
+            });
+            
+            // Add event listeners for admin actions if logged in
+            if (localStorage.getItem('loggedIn')) {
+                postElement.querySelector('.edit-post')?.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    editPost(postId);
+                });
+                
+                postElement.querySelector('.publish-post, .unpublish-post')?.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    togglePublishPost(postId);
+                });
+                
+                postElement.querySelector('.delete-post')?.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    deletePost(postId);
+                });
+            }
+        }
+        
+        // Render full post
+        function renderFullPost(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            
+            postElement.innerHTML = `
+                <button class="back-btn" id="backBtn">← ফিরে যান</button>
+                <h2 class="post-title">${post.title}</h2>
+                <div class="post-author">${post.author}</div>
+                <div class="post-date">রচনাকাল: ${post.date}</div>
+                ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+                <div class="post-content">${post.content}</div>
+                <button class="back-btn" id="backBtnBottom">← ফিরে যান</button>
+            `;
+            
+            contentContainer.appendChild(postElement);
+            
+            // Add event listeners for back buttons
+            document.getElementById('backBtn').addEventListener('click', function() {
+                renderPosts(currentSection);
+                // Restore scroll position after a small delay to allow rendering
+                setTimeout(() => {
+                    window.scrollTo(0, lastScrollPosition);
+                }, 50);
+            });
+            
+            document.getElementById('backBtnBottom').addEventListener('click', function() {
+                renderPosts(currentSection);
+                // Restore scroll position after a small delay to allow rendering
+                setTimeout(() => {
+                    window.scrollTo(0, lastScrollPosition);
+                }, 50);
+            });
+            
+            // Scroll to top when showing full post
+            window.scrollTo(0, 0);
+        }
+        
+        // Navigation click handlers
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                const section = this.getAttribute('data-section');
+                renderPosts(section);
+                
+                // Scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Initialize
+        if (localStorage.getItem('loggedIn')) {
+            loadPosts();
+            loadAuthors();
+            loadBooks();
+        }
+        renderPosts('home');
+    </script>
+</body>
+</html>
